@@ -30,49 +30,36 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import SwiftUI
+import UIKit
 
-struct WelcomeView: View {
-  var body: some View {
-    ZStack {
-      Image("welcome-background", bundle: nil)
-        .resizable()
-        .scaledToFit()
-        .aspectRatio(1 / 1, contentMode: .fill)
-        .edgesIgnoringSafeArea(.all)
-        .saturation(0.5)
-        .blur(radius: 5)
-        .opacity(0.08)
+class KeyboardFollower: ObservableObject {
+  @Published var keyboardHeight: CGFloat = 0
+  @Published var isVisible = false
 
-      HStack {
-        Image(systemName: "table")
-          .resizable()
-          .frame(width: 30, height: 30)
-          .overlay(Circle().stroke(Color.gray, lineWidth: 1))
-          .background(Color(white: 0.9))
-          .clipShape(Circle())
-          .foregroundColor(.red)
-
-        VStack(alignment: .leading) {
-          Text("Welcom to")
-            .font(.headline)
-            .bold()
-
-          Text("Kuchi")
-            .font(.largeTitle)
-            .bold()
-        }
-        .foregroundColor(.red)
-        .lineLimit(2)
-        .multilineTextAlignment(.leading)
-        .padding(.horizontal)
-      }
-    }
+  init() {
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(keyboardVisibilityChanged),
+      name: UIResponder.keyboardWillChangeFrameNotification,
+      object: nil
+    )
   }
-}
 
-struct WelcomeView_Previews: PreviewProvider {
-  static var previews: some View {
-    WelcomeView()
+  deinit {
+    NotificationCenter.default.removeObserver(
+      self,
+      name: UIResponder.keyboardWillChangeFrameNotification,
+      object: nil
+    )
+  }
+
+  @objc private func keyboardVisibilityChanged(_ notification: Notification) {
+    guard let userInfo = notification.userInfo else { return }
+    guard let keyboardEndFrame = userInfo[
+      UIResponder.keyboardFrameEndUserInfoKey
+    ] as? CGRect else { return }
+
+    isVisible = keyboardEndFrame.minY < UIScreen.main.bounds.height
+    keyboardHeight = isVisible ? keyboardEndFrame.height : 0
   }
 }
