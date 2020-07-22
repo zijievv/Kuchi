@@ -36,31 +36,31 @@ struct CongratulationsView: View {
   @ObservedObject var challengesViewModel = ChallengesViewModel()
   let avatarSize: CGFloat = 120
   let userName: String
-  
+
   init(userName: String) {
     self.userName = userName
   }
-  
+
   var body: some View {
     VStack {
       Spacer()
       Text("Congratulations!")
         .font(.title)
         .foregroundColor(.gray)
-      
+
       ZStack {
         avatarBackgroundView
         avatarView
         avatarUserNameView
       }
       .frame(height: 180)
-      
+
       Text("You're awesome!")
         .fontWeight(.bold)
         .foregroundColor(.gray)
-      
+
       Spacer()
-      
+
       Button(action: {
         self.challengesViewModel.restart()
       }, label: {
@@ -88,7 +88,7 @@ extension CongratulationsView {
       .cornerRadius(avatarSize / 2, antialiased: true)
       .shadow(radius: 4)
   }
-  
+
   var avatarBackgroundView: some View {
     VStack(spacing: 0) {
       Rectangle()
@@ -97,7 +97,7 @@ extension CongratulationsView {
           Color(red: 0.5, green: 0, blue: 0)
             .opacity(0.2)
         )
-      
+
       Rectangle()
         .frame(height: 90)
         .foregroundColor(
@@ -106,7 +106,7 @@ extension CongratulationsView {
         )
     }
   }
-  
+
   var avatarUserNameView: some View {
     VStack {
       Spacer()

@@ -34,7 +34,7 @@ import SwiftUI
 
 struct StarterView: View {
   @EnvironmentObject var userViewModel: UserManager
-  
+
   @ViewBuilder
   var body: some View {
     if self.userViewModel.isRegistered {
