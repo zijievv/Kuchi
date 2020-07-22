@@ -32,21 +32,34 @@
 
 import SwiftUI
 
-struct WelcomeBackgroundImage: View {
+struct RegisterView: View {
+  @State var name: String = ""
+  @ObservedObject var keyboardHandler: KeyboardFollower
+
+  init(keyboardHandler: KeyboardFollower) {
+    self.keyboardHandler = keyboardHandler
+  }
+
   var body: some View {
-    Image("welcome-background", bundle: nil)
-      .resizable()
-      .scaledToFit()
-      .aspectRatio(1 / 1, contentMode: .fill)
-      .edgesIgnoringSafeArea(.all)
-      .saturation(0.5)
-      .blur(radius: 5)
-      .opacity(0.08)
+    VStack {
+      Spacer()
+
+      WelcomeMessageView()
+      TextField("Type your name...", text: $name)
+        .bordered()
+
+      Spacer()
+    }
+    .padding(.bottom, keyboardHandler.keyboardHeight)
+    .edgesIgnoringSafeArea(keyboardHandler.isVisible ? .bottom : [])
+    .padding()
+    .background(WelcomeBackgroundImage())
   }
 }
 
-struct WelcomeBackgroundImage_Previews: PreviewProvider {
+struct RegisterView_Previews: PreviewProvider {
   static var previews: some View {
-    WelcomeBackgroundImage()
+    RegisterView(keyboardHandler: KeyboardFollower())
+      .previewDevice("iPhone 11")
   }
 }
