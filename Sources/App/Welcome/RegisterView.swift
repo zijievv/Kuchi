@@ -43,44 +43,14 @@ struct RegisterView: View {
   var body: some View {
     VStack {
       Spacer()
-
       WelcomeMessageView()
 
       TextField("Type your name...", text: $userManager.profile.name)
         .bordered()
 
-      HStack {
-        Spacer()
-        Text("\(userManager.profile.name.count)")
-          .font(.caption)
-          .foregroundColor(userManager.isUserNameValid() ? .green : .red)
-          .padding(.trailing)
-      }
-      .padding(.bottom)
-
-      HStack {
-        Spacer()
-        Toggle(isOn: $userManager.settings.rememberUser) {
-          Text("Remember me")
-            .font(.subheadline)
-            .foregroundColor(.gray)
-        }
-        .fixedSize()
-      }
-
-      Button(action: self.registerUser) {
-        HStack {
-          Image(systemName: "checkmark")
-            .resizable()
-            .frame(width: 16, height: 16, alignment: .center)
-          Text("OK")
-            .font(.body)
-            .bold()
-        }
-      }
-      .bordered()
-      .disabled(!userManager.isUserNameValid())
-
+      userNameLengthCounter
+      rememberMeToggle
+      okButton
       Spacer()
     }
     .padding(.bottom, keyboardHandler.keyboardHeight)
@@ -101,6 +71,44 @@ struct RegisterView_Previews: PreviewProvider {
 }
 
 extension RegisterView {
+  var userNameLengthCounter: some View {
+    HStack {
+      Spacer()
+      Text("\(userManager.profile.name.count)")
+        .font(.caption)
+        .foregroundColor(userManager.isUserNameValid() ? .green : .red)
+        .padding(.trailing)
+    }
+    .padding(.bottom)
+  }
+  
+  var rememberMeToggle: some View {
+    HStack {
+      Spacer()
+      Toggle(isOn: $userManager.settings.rememberUser) {
+        Text("Remember me")
+          .font(.subheadline)
+          .foregroundColor(.gray)
+      }
+      .fixedSize()
+    }
+  }
+  
+  var okButton: some View {
+    Button(action: self.registerUser) {
+      HStack {
+        Image(systemName: "checkmark")
+          .resizable()
+          .frame(width: 16, height: 16, alignment: .center)
+        Text("OK")
+          .font(.body)
+          .bold()
+      }
+    }
+    .bordered()
+    .disabled(!userManager.isUserNameValid())
+  }
+  
   func registerUser() {
     if userManager.settings.rememberUser {
       userManager.persistProfile()
