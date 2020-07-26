@@ -36,11 +36,13 @@ import SwiftUI
 struct PracticeView: View {
   @Binding var challengeTest: ChallengeTest?
   @Binding var userName: String
+  @Binding var numberOfAnswered: Int
 
   @ViewBuilder
   var body: some View {
     if challengeTest != nil {
-      ChallengeView(challengeTest: challengeTest!)
+      ChallengeView(challengeTest: challengeTest!,
+                    numberOfAnswered: $numberOfAnswered)
     } else {
       CongratulationsView(userName: userName)
     }
@@ -52,8 +54,13 @@ struct PracticeView_Previews: PreviewProvider {
     challenge: Challenge(question: "おねがい　します", pronunciation: "Onegai shimasu", answer: "Please"),
     answers: ["Thank you", "Hello", "Goodbye"]
   )
+  @State static var numberOfAnswered: Int = 0
 
   static var previews: some View {
-    return PracticeView(challengeTest: .constant(challengeTest), userName: .constant("Johnny Swift"))
+    return PracticeView(
+      challengeTest: .constant(challengeTest),
+      userName: .constant("Johnny Swift"),
+      numberOfAnswered: $numberOfAnswered
+    )
   }
 }

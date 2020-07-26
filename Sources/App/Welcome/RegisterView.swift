@@ -81,7 +81,7 @@ extension RegisterView {
     }
     .padding(.bottom)
   }
-  
+
   var rememberMeToggle: some View {
     HStack {
       Spacer()
@@ -93,7 +93,7 @@ extension RegisterView {
       .fixedSize()
     }
   }
-  
+
   var okButton: some View {
     Button(action: self.registerUser) {
       HStack {
@@ -108,7 +108,7 @@ extension RegisterView {
     .bordered()
     .disabled(!userManager.isUserNameValid())
   }
-  
+
   func registerUser() {
     if userManager.settings.rememberUser {
       userManager.persistProfile()

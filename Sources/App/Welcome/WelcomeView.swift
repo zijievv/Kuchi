@@ -34,7 +34,7 @@ import SwiftUI
 
 struct WelcomeView: View {
   @EnvironmentObject var userManager: UserManager
-  @ObservedObject var challengesViewModel = ChallengesViewModel()
+  @EnvironmentObject var challengesViewModel: ChallengesViewModel
   @State var showPractice = false
 
   @ViewBuilder
@@ -42,17 +42,18 @@ struct WelcomeView: View {
     if showPractice {
       PracticeView(
         challengeTest: $challengesViewModel.currentChallenge,
-        userName: $userManager.profile.name
+        userName: $userManager.profile.name,
+        numberOfAnswered: .constant(challengesViewModel.numberOfAnswered)
       )
     } else {
       ZStack {
         WelcomeBackgroundImage()
-        
+
         VStack {
           Text(verbatim: "Hi, \(userManager.profile.name)")
-          
+
           WelcomeMessageView()
-          
+
           Button(action: {
             self.showPractice = true
           }) {
