@@ -45,6 +45,8 @@ struct WelcomeView: View {
         userName: $userManager.profile.name,
         numberOfAnswered: .constant(challengesViewModel.numberOfAnswered)
       )
+      .environment(\.questionsPerSession,
+                   challengesViewModel.numberOfQuestions)
     } else {
       ZStack {
         WelcomeBackgroundImage()
@@ -73,5 +75,6 @@ struct WelcomeView_Previews: PreviewProvider {
   static var previews: some View {
     WelcomeView()
       .environmentObject(UserManager())
+      .previewDevice("iPhone 11 Pro")
   }
 }
