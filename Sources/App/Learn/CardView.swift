@@ -34,6 +34,7 @@ import SwiftUI
 
 struct CardView: View {
   let flashCard: FlashCard
+  @State var revealed = false
 
   init(_ card: FlashCard) {
     flashCard = card
@@ -48,18 +49,31 @@ struct CardView: View {
 
       VStack {
         Spacer()
+
         Text(flashCard.card.question)
           .font(.largeTitle)
           .foregroundColor(.white)
-        Text(flashCard.card.answer)
-          .font(.caption)
-          .foregroundColor(.white)
+
+        if self.revealed {
+          Text(flashCard.card.answer)
+            .font(.caption)
+            .foregroundColor(.white)
+        }
+
         Spacer()
       }
     }
     .shadow(radius: 8)
     .frame(width: 320, height: 210)
     .animation(.spring())
+    .gesture(
+      TapGesture()
+        .onEnded {
+          withAnimation(.easeIn) {
+            self.revealed = !self.revealed
+          }
+        }
+    )
   }
 }
 
