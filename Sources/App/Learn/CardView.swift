@@ -33,6 +33,12 @@
 import SwiftUI
 
 struct CardView: View {
+  let flashCard: FlashCard
+
+  init(_ card: FlashCard) {
+    flashCard = card
+  }
+
   var body: some View {
     ZStack {
       Rectangle()
@@ -42,23 +48,29 @@ struct CardView: View {
 
       VStack {
         Spacer()
-        Text("Apple")
+        Text(flashCard.card.question)
           .font(.largeTitle)
           .foregroundColor(.white)
-        Text("Omena")
+        Text(flashCard.card.answer)
           .font(.caption)
           .foregroundColor(.white)
         Spacer()
       }
     }
-    .shadow(color: .black, radius: 8, x: 0, y: 5)
+    .shadow(radius: 8)
     .frame(width: 320, height: 210)
     .animation(.spring())
   }
 }
 
 struct CardView_Previews: PreviewProvider {
+  static let card = FlashCard(
+    card: Challenge(question: "Apple",
+                    pronunciation: "Apple",
+                    answer: "Omena")
+  )
+
   static var previews: some View {
-    CardView()
+    CardView(card)
   }
 }
