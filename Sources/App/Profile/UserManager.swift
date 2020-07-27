@@ -101,6 +101,6 @@ final class UserManager: ObservableObject {
   }
 
   func isUserNameValid() -> Bool {
-    return profile.name.count >= 3
+    profile.name.count >= 3
   }
 }

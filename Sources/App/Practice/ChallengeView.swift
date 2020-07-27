@@ -98,7 +98,7 @@ struct ChallengeView_Previews: PreviewProvider {
   @State static var numberOfAnswered: Int = 0
 
   static var previews: some View {
-    return ChallengeView(challengeTest: challengeTest,
-                         numberOfAnswered: $numberOfAnswered)
+    ChallengeView(challengeTest: challengeTest,
+                  numberOfAnswered: $numberOfAnswered)
   }
 }

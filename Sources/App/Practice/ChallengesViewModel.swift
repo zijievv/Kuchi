@@ -62,7 +62,7 @@ struct ChallengeTest {
   let challenge: Challenge
   let answers: [String]
   func isAnswerCorrect(_ answer: String) -> Bool {
-    return challenge.answer == answer
+    challenge.answer == answer
   }
 }
 
@@ -97,13 +97,13 @@ class ChallengesViewModel: ObservableObject {
               answer: "Sorry"),
   ]
 
-  var allAnswers: [String] { return challenges.map { $0.answer }}
+  var allAnswers: [String] { challenges.map { $0.answer }}
   var correctAnswers: [Challenge] = []
   var wrongAnswers: [Challenge] = []
   @Published var currentChallenge: ChallengeTest?
   private(set) var numberOfQuestions = 6
 
-  var numberOfAnswered: Int { return correctAnswers.count }
+  var numberOfAnswered: Int { correctAnswers.count }
 
   init() {
     generateRandomChallenge()
@@ -145,7 +145,7 @@ class ChallengesViewModel: ObservableObject {
   }
 
   private func getRandomChallenge() -> ChallengeTest? {
-    return getRandomChallenges(count: 1).first
+    getRandomChallenges(count: 1).first
   }
 
   private func getRandomChallenges(count: Int) -> [ChallengeTest] {

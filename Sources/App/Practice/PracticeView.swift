@@ -57,7 +57,7 @@ struct PracticeView_Previews: PreviewProvider {
   @State static var numberOfAnswered: Int = 0
 
   static var previews: some View {
-    return PracticeView(
+    PracticeView(
       challengeTest: .constant(challengeTest),
       userName: .constant("Johnny Swift"),
       numberOfAnswered: $numberOfAnswered
