@@ -73,7 +73,16 @@ extension DeckView {
   }
 
   func createCardView(for card: FlashCard) -> CardView {
-    let view = CardView(card)
+    let view = CardView(card, onDrag: { _, direction in
+      if direction == .left {
+        self.onMemorized()
+      }
+    })
     return view
   }
+}
+
+enum DiscardedDirection {
+  case left
+  case right
 }
