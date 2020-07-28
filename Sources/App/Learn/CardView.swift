@@ -37,6 +37,7 @@ struct CardView: View {
   /// A Boolean value indicating whether the answer is revealed.
   @State var revealed = false
   @State var offset: CGSize = .zero
+  @GestureState var isLongPressed = false
 
   typealias CardDrag = (_ card: FlashCard,
                         _ direction: DiscardedDirection) -> Void
@@ -66,6 +67,12 @@ struct CardView: View {
         }
       }
 
+    let longPress = LongPressGesture()
+      .updating($isLongPressed) { value, state, _ in
+        state = value
+      }
+      .simultaneously(with: drag)
+
     return ZStack {
       Rectangle()
         .fill(Color.red)
@@ -92,7 +99,8 @@ struct CardView: View {
     .frame(width: 320, height: 210)
     .animation(.spring())
     .offset(self.offset)
-    .gesture(drag)
+    .gesture(longPress)
+    .scaleEffect(isLongPressed ? 1.1 : 1)
     .gesture(
       TapGesture()
         .onEnded {
