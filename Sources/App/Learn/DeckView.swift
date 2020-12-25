@@ -33,56 +33,56 @@
 import SwiftUI
 
 struct DeckView: View {
-  @ObservedObject var deck: FlashDeck
+    @ObservedObject var deck: FlashDeck
 
-  let onMemorized: () -> Void
+    let onMemorized: () -> Void
 
-  init(onMemorized: @escaping () -> Void, deck: FlashDeck) {
-    self.onMemorized = onMemorized
-    self.deck = deck
-  }
-
-  var body: some View {
-    ZStack {
-      ForEach(deck.cards.filter { $0.isActive }) { card in
-        self.getCardView(for: card)
-      }
+    init(onMemorized: @escaping () -> Void, deck: FlashDeck) {
+        self.onMemorized = onMemorized
+        self.deck = deck
     }
-  }
+
+    var body: some View {
+        ZStack {
+            ForEach(deck.cards.filter { $0.isActive }) { card in
+                self.getCardView(for: card)
+            }
+        }
+    }
 }
 
 struct DeckView_Previews: PreviewProvider {
-  static var previews: some View {
-    DeckView(onMemorized: {},
-             deck: FlashDeck(from: ChallengesViewModel().challenges))
-  }
+    static var previews: some View {
+        DeckView(onMemorized: {},
+                 deck: FlashDeck(from: ChallengesViewModel().challenges))
+    }
 }
 
 extension DeckView {
-  func getCardView(for card: FlashCard) -> CardView {
-    let activeCards = deck.cards.filter { $0.isActive == true }
+    func getCardView(for card: FlashCard) -> CardView {
+        let activeCards = deck.cards.filter { $0.isActive == true }
 
-    if let lastCard = activeCards.last {
-      if lastCard == card {
-        return createCardView(for: card)
-      }
+        if let lastCard = activeCards.last {
+            if lastCard == card {
+                return createCardView(for: card)
+            }
+        }
+
+        let view = createCardView(for: card)
+        return view
     }
 
-    let view = createCardView(for: card)
-    return view
-  }
-
-  func createCardView(for card: FlashCard) -> CardView {
-    let view = CardView(card, onDrag: { _, direction in
-      if direction == .left {
-        self.onMemorized()
-      }
-    })
-    return view
-  }
+    func createCardView(for card: FlashCard) -> CardView {
+        let view = CardView(card, onDrag: { _, direction in
+            if direction == .left {
+                self.onMemorized()
+            }
+        })
+        return view
+    }
 }
 
 enum DiscardedDirection {
-  case left
-  case right
+    case left
+    case right
 }

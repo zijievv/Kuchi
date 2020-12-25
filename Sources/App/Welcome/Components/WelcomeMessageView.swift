@@ -33,29 +33,29 @@
 import SwiftUI
 
 struct WelcomeMessageView: View {
-  var body: some View {
-    HStack {
-      LogoImage()
+    var body: some View {
+        HStack {
+            LogoImage()
 
-      VStack(alignment: .leading) {
-        Text("Welcom to")
-          .font(.headline)
-          .bold()
+            VStack(alignment: .leading) {
+                Text("Welcom to")
+                    .font(.headline)
+                    .bold()
 
-        Text("Kuchi")
-          .font(.largeTitle)
-          .bold()
-      }
-      .foregroundColor(.red)
-      .lineLimit(2)
-      .multilineTextAlignment(.leading)
-      .padding(.horizontal)
+                Text("Kuchi")
+                    .font(.largeTitle)
+                    .bold()
+            }
+            .foregroundColor(.red)
+            .lineLimit(2)
+            .multilineTextAlignment(.leading)
+            .padding(.horizontal)
+        }
     }
-  }
 }
 
 struct WelcomeMessageView_Previews: PreviewProvider {
-  static var previews: some View {
-    WelcomeMessageView()
-  }
+    static var previews: some View {
+        WelcomeMessageView()
+    }
 }

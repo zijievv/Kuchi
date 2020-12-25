@@ -33,35 +33,35 @@
 import SwiftUI
 
 struct LearnView: View {
-  @ObservedObject var learningStore = LearningStore(
-    deck: ChallengesViewModel().challenges
-  )
+    @ObservedObject var learningStore = LearningStore(
+        deck: ChallengesViewModel().challenges
+    )
 
-  var body: some View {
-    VStack {
-      Spacer()
+    var body: some View {
+        VStack {
+            Spacer()
 
-      Text("Swipe left if you remembered\n"
-        + "Swipe right if you didn't")
-        .font(.headline)
+            Text("Swipe left if you remembered\n"
+                + "Swipe right if you didn't")
+                .font(.headline)
 
-      DeckView(
-        onMemorized: { self.learningStore.score += 1 },
-        deck: learningStore.deck
-      )
-      Spacer()
+            DeckView(
+                onMemorized: { self.learningStore.score += 1 },
+                deck: learningStore.deck
+            )
+            Spacer()
 
-      Text(
-        "Remembered \(self.learningStore.score)"
-          + "/" +
-          "\(self.learningStore.deck.cards.count)"
-      )
+            Text(
+                "Remembered \(self.learningStore.score)"
+                    + "/" +
+                    "\(self.learningStore.deck.cards.count)"
+            )
+        }
     }
-  }
 }
 
 struct LearnView_Previews: PreviewProvider {
-  static var previews: some View {
-    LearnView()
-  }
+    static var previews: some View {
+        LearnView()
+    }
 }
